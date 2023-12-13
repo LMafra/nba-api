@@ -1,13 +1,13 @@
 const pgp = require ('pg-promise')();
 
-const db = pgp('postgres://postgres:85245600le@127.0.0.1:5432/database-nba');
+const db = pgp(`postgres://postgres:postgres@localhost:5432/database-nba`);
 
-const tableName = 'usuarios';
+const tableName = 'users';
 
 const createTableQuery = `
   CREATE TABLE IF NOT EXISTS ${tableName} (
     id SERIAL PRIMARY KEY,
-    nome VARCHAR(100),
+    name VARCHAR(100),
     email VARCHAR(100)
   );
 `;
