@@ -1,15 +1,29 @@
+version: '3'
 services:
-  ts-node-docker:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: base
-    volumes:
-      - ./src:/home/node/app/src
-      - ./nodemon.json:/home/node/app/nodemon.json
-    container_name: ts-node-docker
-    expose:
-      - '8000'
-    ports:
-      - '8000:8000'
-    command: npm run dev
+    postgres:
+        image: postgres:12.1
+        ports:
+            - "5432:5432"
+        environment:
+            POSTGRES_PASSWORD: postgres
+        volumes:
+            - ./postgresql/data:/var/lib/postgresql/data
+    backend:
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+        volumes:
+            - /node_modules
+            - ./backend/src:/src
+            - ./backend/spec:/test
+        ports:
+            - "3000:3000"
+    frontend:
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+        volumes:
+            - /node_modules
+            - ./frontend:/app
+        ports:
+            - "8080:8080"
