@@ -1,8 +1,11 @@
 up:
-	docker-compose up -d
+	docker-compose up
 
-up-prod:
-	docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+up_build:
+	docker-compose up --build
 
-down: 
+down:
 	docker-compose down
+
+clean:
+	docker image prune -a
