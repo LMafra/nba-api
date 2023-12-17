@@ -1,29 +1,42 @@
-version: '3'
+version: '3.8'
 services:
-    postgres:
-        image: postgres:12.1
-        ports:
-            - "5432:5432"
-        environment:
-            POSTGRES_PASSWORD: postgres
-        volumes:
-            - ./postgresql/data:/var/lib/postgresql/data
-    backend:
-        build:
-            context: ./backend
-            dockerfile: Dockerfile
-        volumes:
-            - /node_modules
-            - ./backend/src:/src
-            - ./backend/spec:/test
-        ports:
-            - "3000:3000"
-    frontend:
-        build:
-            context: ./frontend
-            dockerfile: Dockerfile
-        volumes:
-            - /node_modules
-            - ./frontend:/app
-        ports:
-            - "8080:8080"
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - /node_modules
+      - ./frontend:/app
+    ports:
+      - $FRONTEND_LOCAL_PORT:$FRONTEND_DOCKER_PORT
+    depends_on:
+      - backend
+      - postgresdb
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - /node_modules
+      - ./backend/src:/src
+      - ./backend/spec:/test
+    ports:
+      - $BACKEND_LOCAL_PORT:$BACKEND_DOCKER_PORT
+    depends_on:
+      - postgresdb
+  postgresdb:
+    image: postgres
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - POSTGRES_USER=$POSTGRESDB_USER
+      - POSTGRES_PASSWORD=$POSTGRESDB_ROOT_PASSWORD
+      - POSTGRES_DB=$POSTGRESDB_DATABASE
+    ports:
+      - $POSTGRESDB_LOCAL_PORT:$POSTGRESDB_DOCKER_PORT
+    volumes:
+      - db:/var/lib/postgres
+
+
+volumes:
+  db:
