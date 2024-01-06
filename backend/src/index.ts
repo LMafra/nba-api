@@ -1,13 +1,27 @@
-import './pre-start'; // Must be the first import
-import logger from 'jet-logger';
+import { AppDataSource } from "./data-source";
+import * as express from "express";
+import * as dotenv from "dotenv";
+import { Request, Response } from "express";
+import { userRouter } from "./routes/user.routes";
+import "reflect-metadata";
+import { errorHandler } from "./middleware/errorHandler";
+dotenv.config();
 
-import EnvVars from '@src/constants/EnvVars';
-import server from './server';
+const app = express();
+app.use(express.json());
+const { PORT = 3000 } = process.env;
+app.use(errorHandler);
+app.use("/auth", userRouter);
 
+app.get("*", (req: Request, res: Response) => {
+  res.status(505).json({ message: "Bad Request" });
+});
 
-// **** Run **** //
-
-const SERVER_START_MSG = ('Express server started on port: ' + 
-  EnvVars.Port.toString());
-
-server.listen(EnvVars.Port, () => logger.info(SERVER_START_MSG));
+AppDataSource.initialize()
+  .then(async () => {
+    app.listen(PORT, () => {
+      console.log("Server is running on http://localhost:" + PORT);
+    });
+    console.log("Data Source has been initialized!");
+  })
+  .catch((error) => console.log(error));
