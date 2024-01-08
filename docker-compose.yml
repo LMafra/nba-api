@@ -1,15 +1,39 @@
+version: '3.8'
+
 services:
-  ts-node-docker:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: base
+  backend:
+    env_file: ./.env
+    build: ./backend
+    restart: unless-stopped
     volumes:
-      - ./src:/home/node/app/src
-      - ./nodemon.json:/home/node/app/nodemon.json
-    container_name: ts-node-docker
-    expose:
-      - '8000'
+      - ./src:/home/backend/src
+      - ./nodemon.json:/home/backend/nodemon.json
     ports:
-      - '8000:8000'
-    command: npm run dev
+      - $BACKEND_LOCAL_PORT:$BACKEND_LOCAL_PORT
+    environment:
+      - POSTGRESDB_HOST=postgresdb
+      - POSTGRESDB_USER=$POSTGRESDB_USER
+      - POSTGRESDB_ROOT_PASSWORD=$POSTGRESDB_ROOT_PASSWORD
+      - POSTGRESDB_DATABASE=$POSTGRESDB_DATABASE
+      - POSTGRESDB_LOCAL_PORT=$POSTGRESDB_LOCAL_PORT
+    depends_on:
+      - postgresdb
+
+  postgresdb:
+    container_name: "postgres"
+    image: postgres
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - POSTGRES_USER=$POSTGRESDB_USER
+      - POSTGRES_PASSWORD=$POSTGRESDB_ROOT_PASSWORD
+      - POSTGRESDB_DATABASE=$POSTGRESDB_DATABASE
+    ports:
+      - $POSTGRESDB_LOCAL_PORT:$POSTGRESDB_LOCAL_PORT
+    volumes:
+      - db:/var/lib/postgresql/data
+
+
+volumes:
+  node_modules:
+  db:
