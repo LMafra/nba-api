@@ -1,2 +1,0 @@
-# nba-api
- Summer Project
