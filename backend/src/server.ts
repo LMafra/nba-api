@@ -9,7 +9,6 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-const { PORT = 3000 } = process.env;
 app.use(errorHandler);
 app.use(userRouter);
 
@@ -19,8 +18,8 @@ app.get("*", (req: Request, res: Response) => {
 
 AppDataSource.initialize()
   .then(async () => {
-    app.listen(PORT, () => {
-      console.log("Server is running on http://localhost:" + PORT);
+    app.listen(process.env.BACKEND_LOCAL_PORT, () => {
+      console.log("Server is running on http://localhost:" + process.env.BACKEND_LOCAL_PORT);
     });
     console.log("Data Source has been initialized!");
   })

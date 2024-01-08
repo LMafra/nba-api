@@ -8,34 +8,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User1704663023937 = void 0;
-class User1704663023937 {
-    up(queryRunner) {
+exports.encrypt = void 0;
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const bcrypt_1 = __importDefault(require("bcrypt"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+const { JWT_SECRET = "" } = process.env;
+class encrypt {
+    static encryptpass(password) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield queryRunner.query(`
-          --Table Definition
-          CREATE TABLE "users"  (
-            "id" SERIAL PRIMARY KEY,
-            "name" character varying NOT NULL,
-            "email" character varying NOT NULL,
-            "password" character varying NOT NULL,
-            "createdAt" TIMESTAMP NOT NULL DEFAULT now(),
-            "updatedAt" TIMESTAMP NOT NULL DEFAULT now()
-          )
-
-
-
-
-
-          `),
-                undefined;
+            return bcrypt_1.default.hashSync(password, 12);
         });
     }
-    down(queryRunner) {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield queryRunner.query(`DROP TABLE "users"`, undefined);
-        });
+    static comparepassword(hashPassword, password) {
+        return bcrypt_1.default.compareSync(password, hashPassword);
+    }
+    static generateToken(payload) {
+        return jsonwebtoken_1.default.sign(payload, JWT_SECRET, { expiresIn: "1d" });
     }
 }
-exports.User1704663023937 = User1704663023937;
+exports.encrypt = encrypt;

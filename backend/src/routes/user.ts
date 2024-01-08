@@ -11,11 +11,11 @@ Router.post(
   UserController.createUser
 );
 Router.put(
-  "/update/:id",
+  "/users/:id",
   UserController.updateUser
 );
 Router.delete(
-  "/delete/:id",
+  "/users/:id",
   UserController.deleteUser
 );
 export { Router as userRouter };
