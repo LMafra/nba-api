@@ -18,13 +18,15 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const user_1 = require("./routes/user");
 require("reflect-metadata");
 const errorHandler_1 = require("./middleware/errorHandler");
+const player_1 = require("./routes/player");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(errorHandler_1.errorHandler);
 app.use(user_1.userRouter);
+app.use(player_1.playerRouter);
 app.get("*", (req, res) => {
-    res.status(505).json({ message: "Bad Request" });
+    res.status(505).json({ message: "Deu ruim" });
 });
 data_source_1.AppDataSource.initialize()
     .then(() => __awaiter(void 0, void 0, void 0, function* () {
