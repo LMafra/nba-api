@@ -10,7 +10,7 @@ const port = process.env.POSTGRESDB_LOCAL_PORT as unknown as number;
 export const AppDataSource = new DataSource({
    type: 'postgres',
    host: process.env.POSTGRESDB_HOST,
-   port: port,
+   port,
    username: process.env.POSTGRESDB_USER,
    password: process.env.POSTGRESDB_ROOT_PASSWORD,
    database: process.env.POSTGRESDB_DATABASE,

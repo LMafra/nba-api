@@ -9,10 +9,10 @@ export class Player {
   name: string;
 
   @Column()
-  
+
 
   @Column()
-  
+
 
   @CreateDateColumn()
   createdAt: Date;

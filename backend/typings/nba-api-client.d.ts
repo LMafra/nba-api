@@ -1,1 +1,0 @@
-declare module 'nba-api-client';

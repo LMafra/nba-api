@@ -6,12 +6,12 @@ Router.get(
   "/players", PlayerController.getPlayers);
 
 // Router.post(
-//   "/users", UserController.createUser);
+//   "/users", PlayerController.createPlayer);
 
 // Router.put(
-//   "/users/:id", UserController.updateUser);
+//    "/users/:id", PlayerController.updatePlayer);
 
-// Router.delete(
-//   "/users/:id", UserController.deleteUser);
+//  Router.delete(
+//    "/users/:id", PlayerController.deletePlayer);
 
 export { Router as playerRouter };
