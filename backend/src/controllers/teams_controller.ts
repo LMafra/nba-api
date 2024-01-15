@@ -27,8 +27,7 @@ export class TeamsController {
 
     static async getTeam(req: Request, res: Response) {
         const teamId = req.params.id;
-        const teamRepository = AppDataSource.getRepository(Teams); // Use o repositório do TypeORM
-
+        const teamRepository = AppDataSource.getRepository(Teams);
         try {
             const team = await teamRepository.findOne({
                 where: {
