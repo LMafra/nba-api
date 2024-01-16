@@ -13,7 +13,7 @@ app.use(errorHandler);
 app.use(userRouter);
 
 app.get("*", (req: Request, res: Response) => {
-  res.status(505).json({ message: "Bad Request" });
+  res.status(505).json({ message: "Page does not exist!" });
 });
 
 AppDataSource.initialize()

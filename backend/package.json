@@ -8,11 +8,11 @@
     "build": "tsc",
     "prestart": "npm run build",
     "start": "node .",
-    "dev": "nodemon node_modules src/server.ts",
+    "dev": "nodemon --legacy-watch node_modules src/server.ts",
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:run": " npm run typeorm migration:run -- -d ./src/data-source.ts",
     "migration:revert": " npm run typeorm migration:revert -- -d ./src/data-source.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --passWithNoTests"
   },
   "keywords": [],
   "author": "",

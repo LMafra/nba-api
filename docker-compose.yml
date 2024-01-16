@@ -1,16 +1,34 @@
 version: '3.8'
 
 services:
-  backend:
+  frontend:
     env_file: ./.env
-    build: ./backend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     restart: unless-stopped
     volumes:
-      - ./src:/home/backend/src
-      - ./nodemon.json:/home/backend/nodemon.json
+      - ./frontend:/home/frontend
+    ports:
+      - $FRONTEND_LOCAL_PORT:$FRONTEND_LOCAL_PORT
+    environment:
+      - FRONTEND_LOCAL_PORT=$FRONTEND_LOCAL_PORT
+    depends_on:
+      - backend
+
+  backend:
+    env_file: ./.env
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./backend/src:/home/backend/src
+      - ./backend/nodemon.json:/home/backend/nodemon.json
     ports:
       - $BACKEND_LOCAL_PORT:$BACKEND_LOCAL_PORT
     environment:
+      - BACKEND_LOCAL_PORT=$BACKEND_LOCAL_PORT
       - POSTGRESDB_HOST=postgresdb
       - POSTGRESDB_USER=$POSTGRESDB_USER
       - POSTGRESDB_ROOT_PASSWORD=$POSTGRESDB_ROOT_PASSWORD
@@ -33,7 +51,5 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
 
-
 volumes:
-  node_modules:
   db:
