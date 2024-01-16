@@ -1,9 +1,9 @@
 name: CI
 
 on:
-  push:
+  pull_request:
     branches:
-      - main  # Adjust this branch as per your default branch name
+      - main
 
 jobs:
   backend:
