@@ -19,12 +19,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userRouter = void 0;
+exports.playerRouter = void 0;
 const express = __importStar(require("express"));
-const users_controller_1 = require("../controllers/users_controller");
+const players_controller_1 = require("../controllers/players_controller");
 const Router = express.Router();
-exports.userRouter = Router;
-Router.get("/users", users_controller_1.UserController.getUsers);
-Router.post("/users", users_controller_1.UserController.createUser);
-Router.put("/users/:id", users_controller_1.UserController.updateUser);
-Router.delete("/users/:id", users_controller_1.UserController.deleteUser);
+exports.playerRouter = Router;
+Router.get("/players", players_controller_1.PlayerController.getPlayers);

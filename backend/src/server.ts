@@ -5,12 +5,14 @@ import { Request, Response } from "express";
 import { userRouter } from "./routes/user";
 import "reflect-metadata";
 import { errorHandler } from "./middleware/errorHandler";
+import { teamRouter } from "./routes/team";
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(errorHandler);
 app.use(userRouter);
+app.use(teamRouter);
 
 app.get("*", (req: Request, res: Response) => {
   res.status(505).json({ message: "Page does not exist!" });
