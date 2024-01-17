@@ -8,7 +8,7 @@ const port = process.env.POSTGRESDB_LOCAL_PORT;
 exports.AppDataSource = new typeorm_1.DataSource({
     type: 'postgres',
     host: process.env.POSTGRESDB_HOST,
-    port: port,
+    port,
     username: process.env.POSTGRESDB_USER,
     password: process.env.POSTGRESDB_ROOT_PASSWORD,
     database: process.env.POSTGRESDB_DATABASE,

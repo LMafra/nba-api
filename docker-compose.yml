@@ -12,7 +12,7 @@ services:
     ports:
       - $FRONTEND_LOCAL_PORT:$FRONTEND_LOCAL_PORT
     environment:
-      - FRONTEND_LOCAL_PORT=$FRONTEND_LOCAL_PORT
+      - PORT=$FRONTEND_LOCAL_PORT
     depends_on:
       - backend
 
