@@ -1,0 +1,24 @@
+# Node.js
+/node_modules
+/dist
+
+# Build files
+/build
+
+# Environment files
+.env
+
+# Dependency lock files
+package-lock.json
+yarn.lock
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Docker
+/.docker
+.DS_Store

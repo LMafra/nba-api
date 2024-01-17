@@ -1,0 +1,36 @@
+# Set default behavior to automatically detect binary or text
+* text=auto
+
+# Treat all files as text except those with known binary extensions
+*.css text
+*.json text
+*.md text
+*.ts text
+*.tsx text
+*.js text
+*.jsx text
+*.html text
+*.yaml text
+*.yml text
+
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.eot binary
+*.ttf binary
+*.otf binary
+*.zip binary
+*.tar binary
+*.gz binary
+*.rar binary
+*.7z binary
+*.pdf binary
+*.exe binary
+*.dll binary
+*.so binary
+*.class binary

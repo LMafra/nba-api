@@ -17,7 +17,7 @@ app.use(teamRouter);
 app.use(playerRouter);
 
 app.get("*", (req: Request, res: Response) => {
-  res.status(505).json({ message: "Deu ruim" });
+  res.status(505).json({ message: "Page does not exist!" });
 });
 
 AppDataSource.initialize()
