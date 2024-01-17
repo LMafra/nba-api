@@ -7,6 +7,7 @@ import "reflect-metadata";
 import { errorHandler } from "./middleware/errorHandler";
 import { teamRouter } from "./routes/team";
 import { playerRouter } from "./routes/player";
+import { newsRouter } from "./routes/news";
 dotenv.config();
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(errorHandler);
 app.use(userRouter);
 app.use(teamRouter);
 app.use(playerRouter);
+app.use(newsRouter);
 
 app.get("*", (req: Request, res: Response) => {
   res.status(505).json({ message: "Deu ruim" });
