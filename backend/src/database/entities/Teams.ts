@@ -4,7 +4,7 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
 export class Teams {
   @PrimaryGeneratedColumn()
   id: string;
-  
+
   @Column()
   abbreviation: string;
 

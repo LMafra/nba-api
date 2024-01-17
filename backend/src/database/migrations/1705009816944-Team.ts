@@ -38,7 +38,7 @@ export class Team1705009816944 implements MigrationInterface {
           })
         )
       }
-    
+
       public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.dropTable("teams");
       }

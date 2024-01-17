@@ -2,5 +2,8 @@
   "watch": ["src"],
   "ext": "ts,json",
   "ignore": ["src/**/*.spec.ts"],
-  "exec": "ts-node ./src/server.ts"
+  "exec": "ts-node ./src/server.ts",
+  "verbose": true,
+  "legacyWatch": true,
+  "delay": "2000"
 }
