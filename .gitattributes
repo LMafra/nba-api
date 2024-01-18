@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+# Auto detect text files and perform LF normalization
+* text=auto
+=======
 # Set default behavior to automatically detect binary or text
 * text=auto
 
@@ -34,3 +38,4 @@
 *.dll binary
 *.so binary
 *.class binary
+>>>>>>> main

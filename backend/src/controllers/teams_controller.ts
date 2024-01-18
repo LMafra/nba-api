@@ -1,4 +1,4 @@
-import { Request, Response, response } from "express";
+import { Request, Response } from "express";
 import { AppDataSource } from "../data-source";
 import { Teams } from "../database/entities/Teams";
 import cache from "memory-cache";
@@ -16,9 +16,9 @@ export class TeamsController {
           });
         } else {
           console.log("serving from db");
-          const userRepository = AppDataSource.getRepository(Teams);
-          const teams = await userRepository.find();
-
+          const teamsRepository = AppDataSource.getRepository(Teams);
+          const teams = await teamsRepository.find();
+    
           cache.put("data", teams, 6000);
           return res.status(200).json({
             data: teams,
