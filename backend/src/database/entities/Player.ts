@@ -1,22 +1,34 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class Player {
-  @PrimaryGeneratedColumn()
-  id: string;
+	@PrimaryGeneratedColumn()
+	id: string;
 
-  @Column()
-  name: string;
+	@Column()
+	name: string;
 
-  @Column()
+	@Column()
+	number: string;
 
+	@Column()
+	height: string;
 
-  @Column()
+	@Column()
+	weight: string;
 
+	@Column()
+	team: string;
 
-  @CreateDateColumn()
-  createdAt: Date;
+	@Column()
+	position: string;
 
-  @UpdateDateColumn()
-  updatedAt: Date;
+	@Column()
+	country: string;
+
+	@CreateDateColumn()
+	createdAt: Date;
+
+	@UpdateDateColumn()
+	updatedAt: Date;
 }

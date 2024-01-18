@@ -1,4 +1,4 @@
-import { Request, Response, response } from "express";
+import { Request, Response } from "express";
 import { AppDataSource } from "../data-source";
 import { Teams } from "../database/entities/Teams";
 import cache from "memory-cache";
@@ -33,12 +33,12 @@ export class TeamsController {
             return res.status(400).json({ message: 'Invalid team ID' });
         }
         const teamRepository = AppDataSource.getRepository(Teams);
-    
+
         try {
             const team = await teamRepository.findOne({
                 where: {id}
             });
-    
+
             if (!id) {
                 return res.status(404).json({ message: 'Team not found' });
             }
@@ -51,9 +51,9 @@ export class TeamsController {
 
     static async createTeam(req: Request, res: Response) {
         const { abbreviation, name, location } = req.body;
-        
+
         const teamRepository = AppDataSource.getRepository(Teams);
-        const existingTeam = await teamRepository.findOne({ 
+        const existingTeam = await teamRepository.findOne({
             where: { name }
          });
 
@@ -96,7 +96,7 @@ export class TeamsController {
         await teamRepository.remove(team);
         res.status(200).json({message: "ok"})
     }
-    
+
     static async getTeam(req: Request, res: Response){
         const data = await nba.stats.teamStats();
         return res.status(200).json({data});

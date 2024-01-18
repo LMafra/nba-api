@@ -20,20 +20,28 @@ class UserController {
     static getUsers(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const data = memory_cache_1.default.get("data");
-            if (data) {
-                console.log("serving from cache");
-                return res.status(200).json({
-                    data,
-                });
+            const logMessage = `[UserController] Getting Users from ${data ? 'cache' : 'DB'}`;
+            console.log(logMessage);
+            try {
+                if (data) {
+                    return res.status(200).json({
+                        message: 'Users retrieved from cache successfully',
+                        data,
+                    });
+                }
+                else {
+                    const userRepository = data_source_1.AppDataSource.getRepository(User_1.User);
+                    const users = yield userRepository.find();
+                    memory_cache_1.default.put("data", users, 6000);
+                    return res.status(200).json({
+                        message: 'Users retrieved from DB successfully',
+                        data: users,
+                    });
+                }
             }
-            else {
-                console.log("serving from db");
-                const userRepository = data_source_1.AppDataSource.getRepository(User_1.User);
-                const users = yield userRepository.find();
-                memory_cache_1.default.put("data", users, 6000);
-                return res.status(200).json({
-                    data: users,
-                });
+            catch (error) {
+                console.error('[UserController] Error in getUsers:', error.message);
+                return res.status(500).json({ error: 'Internal Server Error' });
             }
         });
     }
@@ -45,10 +53,18 @@ class UserController {
             user.email = email;
             user.password = password;
             const userRepository = data_source_1.AppDataSource.getRepository(User_1.User);
-            yield userRepository.save(user);
-            return res
-                .status(200)
-                .json({ message: "User created successfully", user });
+            try {
+                yield userRepository.save(user);
+                console.log("[UserController] User created successfully");
+                return res.status(200).json({
+                    message: "User created successfully",
+                    user,
+                });
+            }
+            catch (error) {
+                console.error('[UserController] Error in createUser:', error.message);
+                return res.status(500).json({ error: 'Internal Server Error' });
+            }
         });
     }
     static updateUser(req, res) {
@@ -56,24 +72,42 @@ class UserController {
             const { id } = req.params;
             const { name, email } = req.body;
             const userRepository = data_source_1.AppDataSource.getRepository(User_1.User);
-            const user = yield userRepository.findOne({
-                where: { id },
-            });
-            user.name = name;
-            user.email = email;
-            yield userRepository.save(user);
-            res.status(200).json({ message: "udpdate", user });
+            try {
+                const user = yield userRepository.findOne({
+                    where: { id },
+                });
+                if (!user) {
+                    return res.status(404).json({ error: 'User not found' });
+                }
+                user.name = name;
+                user.email = email;
+                yield userRepository.save(user);
+                return res.status(200).json({ message: "User updated successfully", user });
+            }
+            catch (error) {
+                console.error('[UserController] Error in updateUser:', error.message);
+                return res.status(500).json({ error: 'Internal Server Error' });
+            }
         });
     }
     static deleteUser(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             const userRepository = data_source_1.AppDataSource.getRepository(User_1.User);
-            const user = yield userRepository.findOne({
-                where: { id },
-            });
-            yield userRepository.remove(user);
-            res.status(200).json({ message: "ok" });
+            try {
+                const user = yield userRepository.findOne({
+                    where: { id },
+                });
+                if (!user) {
+                    return res.status(404).json({ error: 'User not found' });
+                }
+                yield userRepository.remove(user);
+                return res.status(200).json({ message: "User deleted successfully" });
+            }
+            catch (error) {
+                console.error('[UserController] Error in deleteUser:', error.message);
+                return res.status(500).json({ error: 'Internal Server Error' });
+            }
         });
     }
 }

@@ -1,6 +1,7 @@
 {
   "name": "nba-api",
   "version": "1.0.0",
+<<<<<<< HEAD
   "description": "Summer Project",
   "main": "index.js",
   "scripts": {
@@ -25,4 +26,14 @@
     "ts-node-dev": "^2.0.0",
     "typescritp": "^1.0.0"
   }
+=======
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+>>>>>>> main
 }

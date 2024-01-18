@@ -6,7 +6,7 @@ import { userRouter } from "./routes/user";
 import "reflect-metadata";
 import { errorHandler } from "./middleware/errorHandler";
 import { teamRouter } from "./routes/team";
-import { loginRouter } from "./routes/login";
+import { playerRouter } from "./routes/player";
 dotenv.config();
 
 const app = express();
@@ -14,10 +14,10 @@ app.use(express.json());
 app.use(errorHandler);
 app.use(userRouter);
 app.use(teamRouter);
-app.use(loginRouter)
+app.use(playerRouter);
 
 app.get("*", (req: Request, res: Response) => {
-  res.status(505).json({ message: "Deu ruim" });
+  res.status(505).json({ message: "Page does not exist!" });
 });
 
 AppDataSource.initialize()
